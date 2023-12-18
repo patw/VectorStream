@@ -1,0 +1,62 @@
+
+<!-- saved from url=(0031)https://chat.dungeons.ca/backup -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head><body>patw: I want to use the mongo change stream API to listen to insert/update events on a collection and call an external REST API to generate vector embeddings which will be stored back into the collection.
+Wizard 🧙: <p>To achieve this, you can follow these steps:</p>
+
+<ol>
+<li>Set up a MongoDB instance and create a collection where you want to listen for changes.</li>
+<li>Initialize the change stream using the <code>MongoClient</code> and your database name, collection name, and an options object with the <code>changeStream</code> option set to true.</li>
+<li>Connect to the external REST API by making HTTP requests from your MongoDB server (using libraries like <code>axios</code> or <code>requests</code>) whenever a change occurs in the collection.</li>
+<li>When you receive a response from the REST API, generate the vector embeddings.</li>
+<li>Store these vector embeddings back into the collection using MongoDB's update operation.</li>
+</ol>
+
+<p>Here's a sample code snippet demonstrating this process:</p>
+
+<pre><code class="language-python">import pymongo
+from pymongo import MongoClient
+import requests # or axios if you're using Node.js
+
+# Set up your MongoDB connection
+client = MongoClient('mongodb://localhost:27017/')
+db = client['your_database']
+collection = db['your_collection']
+
+# Initialize the change stream
+change_stream = collection.watch([], full_document='updateLookup')
+
+# Function to handle changes in the collection
+def handle_changes(change):
+    # Extract the necessary information from the change document
+    operation_type = change['operationType']
+    document_key = change['fullDocument']['_id']
+    
+    if operation_type == 'update':
+        # Call your external REST API to generate vector embeddings
+        response = requests.post('https://your-rest-api.com/generate_embeddings', json={...})  # Replace with your actual endpoint and payload
+        
+        # Store the vector embeddings back into MongoDB
+        collection.update_one(
+            {'_id': document_key},
+            {"$set": {"vector_embedding": response.json()["embedding"]}}  # Assuming your API returns an "embedding" field
+        )
+
+# Start consuming changes from the change stream
+for change in change_stream:
+    handle_changes(change)
+</code></pre>
+
+<p>Please adapt this code to fit your specific use case, such as replacing the REST API URL and payload with the actual endpoints and data you're working with.</p>
+
+patw: If you were to build a product around this functionality, what is the top 5 names you'd give it?
+Wizard 🧙: <p>If I were to build a product around this functionality, the top 5 names I'd give it could be:</p>
+
+<ol>
+<li>VectorStream</li>
+<li>EmbeddingFlow</li>
+<li>MongoVectorizer</li>
+<li>ChangeEmbedder</li>
+<li>RealtimeVectorizer</li>
+</ol>
+
+</body></html>

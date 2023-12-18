@@ -1,0 +1,99 @@
+
+<!-- saved from url=(0031)https://chat.dungeons.ca/backup -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head><body>Wizard 🧙: <p>In Python, you can use the <code>format()</code> function or f-strings (available in Python 3.6 and later) for variable substitution in print statements. These methods are more efficient and readable than using concatenation with the plus (+) sign.</p>
+
+<ol>
+<li>Using the <code>format()</code> function:</li>
+</ol>
+
+<pre><code class="language-python">name = "John"
+age = 25
+print("Hello, my name is {} and I'm {} years old.".format(name, age))
+</code></pre>
+
+<p>In this example, we have a string with placeholders denoted by curly braces <code>{}</code>. The <code>format()</code> function takes the variables <code>name</code> and <code>age</code>, and replaces the placeholders in the order they appear with their respective values.</p>
+
+<ol>
+<li>Using f-strings (available in Python 3.6 and later):</li>
+</ol>
+
+<pre><code class="language-python">name = "John"
+age = 25
+print(f"Hello, my name is {name} and I'm {age} years old.")
+</code></pre>
+
+<p>In this example, the string is prefixed with an 'f', which indicates it's an f-string. Inside the string, you can use curly braces <code>{}</code> to embed expressions that will be evaluated and their values inserted directly into the string.</p>
+
+<p>Both methods allow for cleaner code and easier variable substitution in print statements.</p>
+
+patw: How do I make this equivalent call in python using requests: curl -X 'GET' \   'http://vec.dungeons.ca/stvec/?text=sdfsdf&amp;l2=false&amp;stopwords=true' \   -H 'accept: application/json'
+Wizard 🧙: <p>To make the equivalent call in Python using the requests library, you can use the following code:</p>
+
+<pre><code class="language-python">import requests
+
+url = "http://vec.dungeons.ca/stvec/"
+params = {
+    "text": "sdfsdf",
+    "l2": "false",
+    "stopwords": "true"
+}
+headers = {"accept": "application/json"}
+
+response = requests.get(url, params=params, headers=headers)
+
+# Process the response here as needed
+</code></pre>
+
+<p>In this code snippet, we first import the <code>requests</code> library which provides an easy-to-use interface for making HTTP requests.</p>
+
+<p>Next, we define the URL and parameters for our GET request. The parameters are passed as a dictionary to the <code>params</code> argument of the <code>get()</code> function.</p>
+
+<p>Finally, we pass the headers as a dictionary to the <code>headers</code> argument of the <code>get()</code> function. The requests library will automatically set the "accept" header to "application/json" based on our dictionary.</p>
+
+<p>The response from the server is returned in the variable <code>response</code>. You can then process this response as needed, such as parsing the JSON data or checking the status code of the request.</p>
+
+patw: how do I get the json response (which is an array) out of this?
+Wizard 🧙: <p>To extract the JSON response from a Python `requests` object, you can use the `json()` method provided by the library. This method parses the response content as JSON and returns a dictionary or list (array), depending on the structure of the response.</p>
+
+<pre><code class="language-python">import requests
+
+url = "http://vec.dungeons.ca/stvec/"
+params = {
+    "text": "sdfsdf",
+    "l2": "false",
+    "stopwords": "true"
+}
+headers = {"accept": "application/json"}
+
+response = requests.get(url, params=params, headers=headers)
+data = response.json()
+
+# Now `data` is a dictionary or list (array), depending on the JSON structure
+</code></pre>
+
+<p>In this code snippet, we call the `json()` method on the `response` object to convert the JSON content into a Python object. The returned value is a dictionary if the response body is a JSON object or a list (array) if it's a JSON array.</p>
+
+<p>You can then process this data as needed for your application. For example, you can iterate over the list to access individual elements or perform operations on them:</p>
+
+<pre><code class="language-python">for item in data:
+    print(item)
+</code></pre>
+
+patw: How do I check for the existence of a key in this dict:  change['updateDescription']['updatedFields']
+Wizard 🧙: <p>To check if a key exists in a dictionary, you can use the `in` keyword. In Python, you can write code like this:</p>
+
+<pre><code class="language-python">
+# Assuming 'change' is your dictionary
+if 'updateDescription' in change and 'updatedFields' in change['updateDescription']:
+    print("The key 'updatedFields' exists within the 'updateDescription' sub-dictionary.")
+else:
+    print("The key 'updatedFields' does not exist within the 'updateDescription' sub-dictionary.")
+</code></pre>
+
+<p>This code first checks if the key 'updateDescription' is present in the dictionary 'change'. If it is, then it further checks if the key 'updatedFields' exists within the 'updateDescription' sub-dictionary.</p>
+
+<p>If both keys exist, it will print a message indicating that the key 'updatedFields' exists within the 'updateDescription' sub-dictionary. Otherwise, it will print a message saying that the key does not exist.</p>
+
+<p>This approach allows you to safely access dictionary elements and avoids KeyError exceptions when trying to access nonexistent keys.</p>
+
+</body></html>
